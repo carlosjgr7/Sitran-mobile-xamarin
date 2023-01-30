@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Sitran.Controls"
+    x:Class="Sitran.Ui.Pages.LoginPage"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+    ios:Page.UseSafeArea="True"
+    NavigationPage.HasNavigationBar="False"
+    >
+
+    <ContentPage.Content >
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                 EndPoint="1,1"
+                                 BindingContext="{Binding Source={RelativeSource AncestorType=
+                                    {x:Type Grid}}, Path=BindingContext}">
+                    <GradientStop Color="Violet"
+                            Offset="0.1"/>
+                    <GradientStop Color="Blue"
+                           Offset="0.9" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <StackLayout
+                Padding="12"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                
+               >
+                <Frame CornerRadius="15"
+                       HeightRequest="320"
+                       Background="#DEE8F1"
+                       >
+                    <StackLayout>
+                        <StackLayout HorizontalOptions="CenterAndExpand">
+                            <Label Text="Login"
+                                   FontAttributes="Bold"
+                                   FontSize="24"
+                                   TextColor="DarkSlateBlue"/>
+                        </StackLayout>
+
+                        <StackLayout Margin="0,25,0,0" Spacing="10" >
+                            <local:StandardEntry
+                                Text="{Binding User}"
+                                Placeholder="Username"
+                                HeightRequest="60"
+                                BorderThickness="1"
+                                BorderColor="DarkSlateBlue"
+                                TextColor="Black"
+                                PlaceholderColor="#cdcdcd"
+                                CornerRadius="5"
+                                Padding="10,0,0,0"
+                                />
+                            <local:StandardEntry
+                                Text="{Binding Pass}"
+                                Placeholder="Password"
+                                HeightRequest="60"
+                                BorderThickness="1"
+                                BorderColor="DarkSlateBlue"
+                                TextColor="Black"
+                                PlaceholderColor="#cdcdcd"
+                                CornerRadius="5"
+                                Padding="10,0,0,0"
+                                IsPassword="True"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal" Margin="0,0,0,12">
+                            <CheckBox IsChecked="{Binding Remember}" Color="DarkSlateBlue"/>
+                            <Label Text="Remember" VerticalOptions="Center" TextColor="Black"/>
+                        </StackLayout>
+
+                        <Grid ColumnDefinitions="9*,*,2.5*" RowDefinitions="*" >
+                            <Button
+                                Text="Login"
+                                Command="{Binding LoginCommand}"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                BackgroundColor="DarkSlateBlue"
+                                BorderColor="Black"
+                                TextColor="White"
+                                BorderWidth="1"/>
+                            <Button
+                                ImageSource="fingerprint.png"
+                                Command="{Binding BiometricsCommand}"
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                BackgroundColor="Transparent"
+                                BorderColor="DarkSlateBlue"
+                                BorderWidth="1"/>
+                        </Grid>
+
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+                 xmlns:custommenu="clr-namespace:Sitran.ContentViewMenu"
+                 x:Class="Sitran.Ui.Pages.GraphicsPage"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="True"
+                 NavigationPage.HasNavigationBar="False"
+                 
+             >
+    <ContentPage.Content >
+
+
+
+
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" IsEnabled="False" IsVisible="false" >
+                    <StackLayout Background="White" >
+                        <!--#region Seleccion de Fechas-->
+                        <StackLayout Padding="6" Margin="0,80,0,0" Grid.Row="1">
+                            <Frame CornerRadius="15" >
+                                <Grid ColumnDefinitions="*,*,*" HeightRequest="170">
+                                    <Picker
+                            Grid.Column="0"
+                            VerticalOptions="Start"
+                            Title="Mes"
+                            TitleColor="Blue"
+                            TextColor="Black"
+                            ItemsSource="{Binding Month}"
+                            ItemDisplayBinding="{Binding Value}"
+                            SelectedItem="{Binding SelectMonth}"
+                            />
+
+                                    <Picker
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Start"
+                            VerticalOptions="Start"
+                            Title="Año"
+                            TitleColor="Blue"
+                            TextColor="Black"
+                            ItemsSource="{Binding Year}"
+                            ItemDisplayBinding="{Binding Value}"
+                            SelectedItem="{Binding SelectYear}"
+                            />
+                                    <Button
+                            Grid.Column="2"
+                            CornerRadius="10"
+                            Background="lightgreen"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            Text="Buscar"
+                            Command="{Binding CommandFind}"
+                            />
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                        <!--#endregion-->
+                        <!--#region Graficas-->
+                        <ScrollView>
+                            <StackLayout Padding="6">
+                                <CarouselView ItemsSource="{Binding ChartsTransacciones}"
+                                  HeightRequest="430">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Padding="5" HeightRequest="400">
+                                                <Frame 
+                                       BorderColor="White"
+                                       CornerRadius="8"
+                                       Padding="12"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="Center"
+                                      >
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Name}"
+                                                   FontSize="24"
+                                                   TextColor="#939290"/>
+                                                        <BoxView HeightRequest="1"
+                                                     BackgroundColor="#cdcdcd"/>
+                                                        <microcharts:ChartView
+                                                   Chart="{Binding Chart}"  
+                                                   HeightRequest="250"  
+                                                 />
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="Blue"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="Aprobadas este mes:" TextColor="Black"/>
+                                                            <Label Text="{Binding CantidadAprobadasEsteMes}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold" />
+                                                        </StackLayout>
+
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="Red"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="Rechazadas este mes:" TextColor="Black"/>
+                                                            <Label Text="{Binding CantidadRechazadasEsteMes}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"/>
+
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#008000"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="Aprobadas mes pasado:" TextColor="Black"/>
+                                                            <Label Text="{Binding CantidadRechazadasEsteMes}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"/>
+
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#F6C844"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="Rechazadas mes pasado:" TextColor="Black"/>
+                                                            <Label Text="{Binding CantidadRechazadasMesPasado}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"/>
+
+                                                        </StackLayout>
+
+                                                    </StackLayout>
+                                                </Frame>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <CarouselView ItemsSource="{Binding ChartsPosTransando}"
+                                  HeightRequest="485">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Padding="5">
+                                                <Frame 
+                                       BorderColor="White"
+                                       CornerRadius="8"
+                                       Padding="12"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="Center"
+                                      >
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Name}"
+                                                   FontSize="24"
+                                                   TextColor="#939290"/>
+                                                        <BoxView HeightRequest="1"
+                                                     BackgroundColor="#cdcdcd"/>
+                                                        <microcharts:ChartView
+                                                   Chart="{Binding Chart}"  
+                                                   HeightRequest="250"  
+                                                 />
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#FF00008B"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="CarroPago:" TextColor="Black"/>
+                                                            <Label Text="{Binding CarroPago}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"/>
+                                                        </StackLayout>
+
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                    WidthRequest="20"
+                                                    BackgroundColor="#FF0000"
+                                                    CornerRadius="10"/>
+                                                            <Label Text="LibrePago:" TextColor="Black"/>
+                                                            <Label Text="{Binding LibrePago}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#008000"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="MilPagos:" TextColor="Black"/>
+                                                            <Label Text="{Binding MilPagos}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#F6C844"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="BCV:" TextColor="Black"/>
+                                                            <Label Text="{Binding Bvc}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#FFDEB887"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="Banco Plaza:" TextColor="Black"/>
+                                                            <Label Text="{Binding Plaza}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#FFDC143C"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="BCN:" TextColor="Black"/>
+                                                            <Label Text="{Binding Bnc}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                    </StackLayout>
+                                                </Frame>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <CarouselView ItemsSource="{Binding ChartsMontoTransaccionesAprobadas}"
+                                  HeightRequest="510">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Padding="5">
+                                                <Frame 
+                                       BorderColor="White"
+                                       CornerRadius="8"
+                                       Padding="12"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="Center"
+                                      >
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Name}"
+                                                   FontSize="24"
+                                                   TextColor="#939290"/>
+                                                        <BoxView HeightRequest="1"
+                                                     BackgroundColor="#cdcdcd"/>
+                                                        <microcharts:ChartView
+                                                   Chart="{Binding Chart}"  
+                                                   HeightRequest="250"  
+                                                 />
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#FF00008B"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="CarroPago:" TextColor="Black"/>
+                                                            <Label Text="{Binding CarroPago}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"/>
+                                                        </StackLayout>
+
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                    WidthRequest="20"
+                                                    BackgroundColor="#FF0000"
+                                                    CornerRadius="10"/>
+                                                            <Label Text="LibrePago:" TextColor="Black"/>
+                                                            <Label Text="{Binding LibrePago}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#008000"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="MilPagos:" TextColor="Black"/>
+                                                            <Label Text="{Binding MilPagos}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#F6C844"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="BCV:" TextColor="Black"/>
+                                                            <Label Text="{Binding Bvc}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#FFDEB887"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="Banco Plaza:" TextColor="Black"/>
+                                                            <Label Text="{Binding Plaza}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <BoxView
+                                                    HeightRequest="20"
+                                                     WidthRequest="20"
+                                                     BackgroundColor="#FFDC143C"
+                                                     CornerRadius="10"/>
+                                                            <Label Text="BCN:" TextColor="Black"/>
+                                                            <Label Text="{Binding Bnc}"
+                                                       TextColor="Black"
+                                                       FontAttributes="Bold"
+                                                />
+                                                        </StackLayout>
+
+                                                    </StackLayout>
+                                                </Frame>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <CarouselView ItemsSource="{Binding ChartsMontoMensual}"
+                                  HeightRequest="430"
+                                  IsEnabled="False"
+                                  IsSwipeEnabled="False"
+                                  >
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Padding="5">
+                                                <Frame 
+                                       BorderColor="White"
+                                       CornerRadius="8"
+                                       Padding="12"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="Center"
+                                      >
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Name}"
+                                                   FontSize="24"
+                                                   TextColor="#939290"/>
+                                                        <BoxView HeightRequest="1"
+                                                     BackgroundColor="#cdcdcd"/>
+                                                        <StackLayout>
+                                                            <microcharts:ChartView
+                                                       Chart="{Binding Chart}"  
+                                                       HeightRequest="250"
+                                                        />
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </Frame>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                            </StackLayout>
+                        </ScrollView>
+                        <!--#endregion-->
+                    </StackLayout>
+                </StackLayout>
+
+            </Grid>
+            <Grid x:Name="MainMenuView" ColumnDefinitions="Auto, *" BackgroundColor="{Binding BackColorOrg}" HeightRequest="500" 
+              VerticalOptions="Start" AnchorX="0.08" AnchorY="0.08" Rotation="-90">
+                <Grid AnchorX="0.08" AnchorY="0.08" Rotation="90">
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <ImageButton Source="menu.png" BackgroundColor="Transparent" WidthRequest="20" HeightRequest="20" 
+                            VerticalOptions="Start" HorizontalOptions="Center" Margin="0,5,0,0" Clicked="ShowMenu"/>
+                        <Label x:Name="TitleTxt" Text="{Binding Organizacion}" TextColor="White" FontSize="22" FontAttributes="Bold" 
+                        HorizontalOptions="Center" VerticalOptions="Start"/>
+                    </StackLayout>
+                </Grid>
+                <Grid x:Name="MenuItemsView" Grid.Column="1" HorizontalOptions="FillAndExpand" TranslationX="-50" Opacity="0">
+                    <StackLayout Margin="0,70,0,0" Spacing="20" BindableLayout.ItemsSource="{Binding MenuItems}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" Spacing="20">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="MenuTapped" Command="{Binding SendNameCommand}"
+                                                              CommandParameter="{Binding Source={x:Reference TitleTxt}, Path=Text}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="{Binding Icon}" WidthRequest="20" HeightRequest="20" 
+                                    VerticalOptions="Center" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Title}" TextColor="White" FontSize="22" FontAttributes="Bold" 
+                                    HorizontalOptions="Start" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content >
+</ContentPage>
